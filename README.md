@@ -6,7 +6,7 @@ A plugin for graphql-code-generator
 
 Install graphql-code-generator and this plugin
 
-    npm i -D graphql-code-generator graphql-codegen-persisted-query-ids
+    npm i -D graphql-code-generator graphql-codegen-apq-ids
 
 ## Usage
 
@@ -17,12 +17,12 @@ schema: http://app.test/graphql
 documents: "./src/**/*.js"
 generates:
     persisted-query-ids/client.json:
-        - graphql-codegen-persisted-query-ids:
+        - graphql-codegen-apq-ids:
               output: client
               algorithm: sha256
 
     persisted-query-ids/server.json:
-        - graphql-codegen-persisted-query-ids:
+        - graphql-codegen-apq-ids:
               output: server
               algorithm: sha256
 ```
@@ -78,7 +78,7 @@ Add custom `generateHash` to [apollo-link-persisted-queries](https://github.com/
 ```ts
 import { createPersistedQueryLink } from "@apollo/client/link/persisted-queries";
 // import {createPersistedQueryLink } from "apollo-link-persisted-queries"; // For Apollo Client v2
-import { usePregeneratedHashes } from "graphql-codegen-persisted-query-ids/lib/apollo";
+import { usePregeneratedHashes } from "graphql-codegen-apq-ids/lib/apollo";
 
 const hashes = require("../persisted-query-ids/client.json");
 

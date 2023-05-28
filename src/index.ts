@@ -17,12 +17,11 @@ function createHash(s: string, config: PluginConfig) {
     return crypto
         .createHash(config.algorithm || "sha256")
         .update(s, "utf8")
-        .digest()
-        .toString("hex");
+        .digest("hex");
 }
 
 function printDefinitions(definitions: (Definition | DocumentNode)[]) {
-    return definitions.map(print).join("\n");
+    return definitions.map(print).join("\n\n");
 }
 
 const TYPENAME_FIELD: FieldNode = {
@@ -55,10 +54,11 @@ function addTypenameToDocument(doc: DocumentNode): DocumentNode {
 
                 // If selections already have a __typename, or are part of an
                 // introspection query, do nothing.
-                const skip = selections.some(selection => {
+                const skip = selections.some((selection) => {
                     return (
                         selection.kind === "Field" &&
-                        ((selection as FieldNode).name.value === "__typename" ||
+                        ((selection as FieldNode).name.value ===
+                            TYPENAME_FIELD.name.value ||
                             (selection as FieldNode).name.value.lastIndexOf(
                                 "__",
                                 0,
@@ -154,8 +154,8 @@ export function generateQueryIds(docs: DocumentNode[], config: PluginConfig) {
                     );
 
                     const query = printDefinitions([
-                        ...Array.from(usedFragments.values()),
                         def,
+                        ...Array.from(usedFragments.values()),
                     ]);
 
                     const hash = createHash(query, config);
@@ -204,7 +204,7 @@ export const plugin: PluginFunction<PluginConfig> = (
     config,
 ) => {
     const queries = generateQueryIds(
-        documents.map(doc => {
+        documents.map((doc) => {
             // graphql-code-generator moved from .content to .document at some point.
             // Try to work with both. Must use any since the tests can only have
             // one version of the typings
@@ -224,7 +224,7 @@ export const plugin: PluginFunction<PluginConfig> = (
         out = format.server(queries);
     } else {
         throw new Error(
-            "graphql-codegen-persisted-query-id must configure output to 'server' or 'client'",
+            "graphql-codegen-apq-ids must configure output to 'server' or 'client'",
         );
     }
 
