@@ -7,6 +7,7 @@ import {
     FieldNode,
     FragmentDefinitionNode,
     Location,
+    Kind,
 } from "graphql";
 
 import { PluginFunction } from "@graphql-codegen/plugin-helpers";
@@ -25,9 +26,9 @@ function printDefinitions(definitions: (Definition | DocumentNode)[]) {
 }
 
 const TYPENAME_FIELD: FieldNode = {
-    kind: "Field",
+    kind: Kind.FIELD,
     name: {
-        kind: "Name",
+        kind: Kind.NAME,
         value: "__typename",
     },
 };
