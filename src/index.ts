@@ -1,16 +1,16 @@
 import crypto from "crypto";
 import {
     print,
-    DocumentNode,
-    OperationDefinitionNode,
+    type DocumentNode,
+    type OperationDefinitionNode,
     visit,
-    FieldNode,
-    FragmentDefinitionNode,
-    Location,
+    type FieldNode,
+    type FragmentDefinitionNode,
+    type Location,
     Kind,
 } from "graphql";
 
-import { PluginFunction } from "@graphql-codegen/plugin-helpers";
+import { type PluginFunction } from "@graphql-codegen/plugin-helpers";
 
 type Definition = FragmentDefinitionNode | OperationDefinitionNode;
 
